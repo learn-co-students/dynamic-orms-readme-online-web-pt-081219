@@ -25,5 +25,9 @@ puts song2.id
 
 songfind = Song.find_by_name("Hello")
 puts songfind
+
+songfind2 = Song.find_by_name("One Love")
+puts songfind2
+
 DB[:conn].execute("SELECT * FROM songs")
 
