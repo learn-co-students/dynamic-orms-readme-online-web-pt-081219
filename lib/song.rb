@@ -38,6 +38,7 @@ class Song
 #we expect to be operating on a hash
   def initialize(options={})
   #iterate over the options hash and use our send method 
+  #.send invokes a method without knowing what the method name is
     options.each do |property, value|
       self.send("#{property}=", value)
     end
@@ -60,9 +61,15 @@ class Song
     values = []
     self.class.column_names.each do |col_name|
       values << "'#{send(col_name)}'" unless send(col_name).nil?
-       
+       #push the return value of invoking a method via the #send method, unless that value is nil 
+       #each value will be wrapped in '' because the returning value should look like 'example'
+       #SQL expects us to pass in each column value in single quotes.
+       #this will return ["'the name of the song'", "'the album of the song'"]
     end
     values.join(", ")
+    binding.pry
+    #We need comma separated values for our SQL statement. Let's join this array into a string:
+    #
   end
 #abstracting column names 
 #need to remove id because that is assigned in SQL
